@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Preview</title>
+    <link rel="manifest" href="/manifest.json">
+    <script src="/lib/lz-string.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div id="content"></div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const compressedCode = params.get('code');
+        
+        if (compressedCode) {
+            try {
+                const html = LZString.decompressFromEncodedURIComponent(compressedCode);
+                document.getElementById('content').innerHTML = html;
+            } catch (error) {
+                document.body.innerHTML = '<p style="color: red">Error al cargar el código.</p>';
+            }
+        } else {
+            document.body.innerHTML = '<p>No se proporcionó código.</p>';
+        }
+    </script>
+</body>
+</html>
